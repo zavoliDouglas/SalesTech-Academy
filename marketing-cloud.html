@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Marketing Cloud — SalesTech Academy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .course-hero { background: linear-gradient(135deg, #0c3460 0%, #185fa5 100%); color: #fff; padding: 64px 0 80px; }
+    .course-hero__back { display:inline-flex; align-items:center; gap:6px; font-size:13px; color:rgba(255,255,255,0.6); margin-bottom:24px; transition:color 0.2s; }
+    .course-hero__back:hover { color:#fff; }
+    .course-hero__badge { display:inline-flex; align-items:center; gap:6px; background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.2); color:#fff; font-size:12px; font-weight:500; padding:4px 12px; border-radius:20px; margin-bottom:16px; font-family:var(--mono); }
+    .course-hero__title { font-size:clamp(28px,4vw,44px); font-weight:300; letter-spacing:-1px; margin-bottom:16px; line-height:1.15; }
+    .course-hero__title strong { font-weight:500; }
+    .course-hero__desc { font-size:16px; color:rgba(255,255,255,0.75); max-width:560px; line-height:1.7; margin-bottom:28px; }
+    .course-hero__meta { display:flex; gap:24px; flex-wrap:wrap; }
+    .course-hero__meta-item { display:flex; align-items:center; gap:6px; font-size:13px; color:rgba(255,255,255,0.7); }
+    .course-hero__meta-item strong { color:#fff; }
+    .course-layout { display:grid; grid-template-columns:1fr 320px; gap:40px; padding:56px 0; align-items:start; }
+    .sidebar { position:sticky; top:80px; }
+    .sidebar-card { background:#fff; border:1px solid var(--border); border-radius:var(--radius-lg); padding:24px; margin-bottom:16px; }
+    .sidebar-card__title { font-size:14px; font-weight:500; margin-bottom:16px; }
+    .module-list { display:flex; flex-direction:column; gap:2px; }
+    .module-item { display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:var(--radius-md); color:var(--text); }
+    .module-item__num { width:24px; height:24px; border-radius:50%; background:var(--gray-100); display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:500; color:var(--text-muted); flex-shrink:0; font-family:var(--mono); }
+    .module-item.done .module-item__num { background:var(--blue-400); color:#fff; }
+    .module-item.active .module-item__num { background:var(--blue-900); color:#fff; }
+    .module-item__info { flex:1; }
+    .module-item__title { font-size:13px; font-weight:500; }
+    .module-item__sub { font-size:11px; color:var(--text-muted); margin-top:1px; }
+    .content-block { margin-bottom:48px; }
+    .content-block__label { font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:1.2px; color:var(--blue-400); font-family:var(--mono); margin-bottom:8px; }
+    .content-block__title { font-size:24px; font-weight:300; letter-spacing:-0.5px; margin-bottom:16px; }
+    .content-block__text { font-size:15px; color:var(--text-muted); line-height:1.75; margin-bottom:16px; }
+    .content-block__text strong { color:var(--text); font-weight:500; }
+    .concept-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:20px 0; }
+    .concept-card { background:#fff; border:1px solid var(--border); border-radius:var(--radius-md); padding:16px; }
+    .concept-card__icon { font-size:20px; margin-bottom:8px; }
+    .concept-card__title { font-size:13px; font-weight:500; margin-bottom:6px; }
+    .concept-card__desc { font-size:12px; color:var(--text-muted); line-height:1.5; }
+    .tip-box { background:var(--blue-50); border:1px solid var(--blue-400); border-radius:var(--radius-md); padding:16px 20px; margin:20px 0; display:flex; gap:12px; }
+    .tip-box__text { font-size:13px; color:var(--blue-900); line-height:1.6; }
+    .tip-box__text strong { font-weight:500; }
+    .use-case-list { display:flex; flex-direction:column; gap:12px; margin:20px 0; }
+    .use-case { background:#fff; border:1px solid var(--border); border-left:3px solid var(--blue-400); border-radius:0 var(--radius-md) var(--radius-md) 0; padding:14px 18px; }
+    .use-case__title { font-size:13px; font-weight:500; margin-bottom:4px; }
+    .use-case__desc { font-size:12px; color:var(--text-muted); line-height:1.5; }
+    .code-block { background:var(--gray-900); border-radius:var(--radius-md); padding:20px 24px; margin:20px 0; overflow-x:auto; }
+    .code-block pre { font-family:var(--mono); font-size:12px; color:#e8e6e0; line-height:1.7; margin:0; white-space:pre-wrap; }
+    .code-block .comment { color:#6b7280; }
+    .code-block .key { color:#93c5fd; }
+    .code-block .value { color:#6ee7b7; }
+    .code-block .string { color:#fcd34d; }
+    .divider { height:1px; background:var(--border); margin:40px 0; }
+    .journey-flow { display:flex; gap:0; margin:24px 0; overflow-x:auto; padding-bottom:8px; }
+    .journey-step { display:flex; align-items:center; flex-shrink:0; }
+    .journey-node { background:#fff; border:1px solid var(--border); border-radius:var(--radius-md); padding:12px 14px; min-width:120px; text-align:center; }
+    .journey-node__title { font-size:12px; font-weight:500; margin-bottom:2px; }
+    .journey-node__sub { font-size:10px; color:var(--text-muted); }
+    .journey-node--trigger { border-color:var(--blue-400); background:var(--blue-50); }
+    .journey-node--trigger .journey-node__title { color:var(--blue-900); }
+    .journey-node--action { border-color:var(--purple-400); background:var(--purple-50); }
+    .journey-node--action .journey-node__title { color:var(--purple-900); }
+    .journey-node--decision { border-color:var(--amber-400); background:var(--amber-50); transform:rotate(0deg); }
+    .journey-node--decision .journey-node__title { color:#633806; }
+    .journey-arrow { padding:0 8px; color:var(--gray-400); font-size:16px; }
+    @media (max-width:900px) { .course-layout { grid-template-columns:1fr; } .sidebar { position:static; } .concept-grid { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+
+  <div class="event-banner" id="event-banner" style="display:none;">
+    <div class="event-banner__inner">
+      <span class="event-banner__pulse"></span>
+      <p class="event-banner__text"><strong>Você está no evento ao vivo!</strong> Esta página faz parte da demo de personalização em tempo real.</p>
+      <button class="event-banner__close" onclick="document.getElementById('event-banner').style.display='none'" aria-label="Fechar">×</button>
+    </div>
+  </div>
+
+  <header class="navbar">
+    <div class="container navbar__inner">
+      <a href="index.html" class="navbar__logo">
+        <span class="logo-mark">ST</span>
+        <span class="logo-text">SalesTech<em>Academy</em></span>
+      </a>
+      <nav class="navbar__links">
+        <a href="index.html#cursos">Cursos</a>
+        <a href="index.html#nuvens">Nuvens</a>
+        <a href="index.html#trilhas">Trilhas</a>
+      </nav>
+      <div class="navbar__actions">
+        <span class="user-greeting" id="nav-user" style="display:none;"></span>
+        <a href="index.html#identificar" class="btn btn--outline" id="nav-cta">Começar grátis</a>
+      </div>
+    </div>
+  </header>
+
+  <section class="course-hero">
+    <div class="container">
+      <a href="index.html" class="course-hero__back">← Voltar para home</a>
+      <div class="course-hero__badge">
+        <span style="width:6px;height:6px;background:#93c5fd;border-radius:50%;display:inline-block;"></span>
+        Marketing Cloud Engagement
+      </div>
+      <h1 class="course-hero__title">
+        Jornadas, email e automação<br/>
+        <strong>em escala</strong>
+      </h1>
+      <p class="course-hero__desc">
+        Do Email Studio ao Journey Builder — aprenda a criar comunicações personalizadas, orquestrar jornadas multicanal e integrar o Marketing Cloud com o ecossistema Salesforce.
+      </p>
+      <div class="course-hero__meta">
+        <div class="course-hero__meta-item">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          <span><strong>8 módulos</strong></span>
+        </div>
+        <div class="course-hero__meta-item">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span><strong>5 horas</strong> de conteúdo</span>
+        </div>
+        <div class="course-hero__meta-item">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <span>Nível <strong>Intermediário</strong></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="container course-layout">
+    <main>
+
+      <div class="content-block">
+        <p class="content-block__label">Módulo 1</p>
+        <h2 class="content-block__title">O ecossistema Marketing Cloud</h2>
+        <p class="content-block__text">
+          O <strong>Salesforce Marketing Cloud (SFMC)</strong> é a plataforma de automação de marketing do ecossistema Salesforce. Ele orquestra comunicações em múltiplos canais — email, SMS, push, social, web — com base em dados comportamentais e de CRM.
+        </p>
+        <p class="content-block__text">
+          O SFMC é composto por vários studios e builders, cada um com uma função específica. Entender como eles se conectam é fundamental para construir jornadas eficazes e integradas.
+        </p>
+
+        <div class="concept-grid">
+          <div class="concept-card" style="border-top:3px solid var(--blue-400);">
+            <div class="concept-card__icon">📧</div>
+            <div class="concept-card__title">Email Studio</div>
+            <div class="concept-card__desc">Criação, personalização e disparo de emails. Suporta conteúdo dinâmico, testes A/B e personalização via AMPscript e SSJS.</div>
+          </div>
+          <div class="concept-card" style="border-top:3px solid var(--blue-400);">
+            <div class="concept-card__icon">🗺️</div>
+            <div class="concept-card__title">Journey Builder</div>
+            <div class="concept-card__desc">Orquestração de jornadas multicanal. Define o fluxo de comunicação com base em eventos, comportamentos e dados do cliente.</div>
+          </div>
+          <div class="concept-card" style="border-top:3px solid var(--blue-400);">
+            <div class="concept-card__icon">📊</div>
+            <div class="concept-card__title">Audience Builder</div>
+            <div class="concept-card__desc">Segmentação de audiências com base em atributos e comportamentos de múltiplas fontes de dados do SFMC.</div>
+          </div>
+          <div class="concept-card" style="border-top:3px solid var(--blue-400);">
+            <div class="concept-card__icon">🔗</div>
+            <div class="concept-card__title">Contact Builder</div>
+            <div class="concept-card__desc">Gerencia o modelo de dados do SFMC — Data Extensions, relacionamentos e a estrutura que suporta personalização em escala.</div>
+          </div>
+          <div class="concept-card" style="border-top:3px solid var(--blue-400);">
+            <div class="concept-card__icon">💬</div>
+            <div class="concept-card__title">Mobile Studio</div>
+            <div class="concept-card__desc">SMS, push notifications e mensagens in-app. Permite comunicação em tempo real baseada em geolocalização e comportamento mobile.</div>
+          </div>
+          <div class="concept-card" style="border-top:3px solid var(--blue-400);">
+            <div class="concept-card__icon">⚙️</div>
+            <div class="concept-card__title">Automation Studio</div>
+            <div class="concept-card__desc">Automação de processos de dados — importação, transformação, segmentação e disparo agendado. Complementa o Journey Builder.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="content-block">
+        <p class="content-block__label">Módulo 2</p>
+        <h2 class="content-block__title">AMPscript — personalização dentro do email</h2>
+        <p class="content-block__text">
+          O <strong>AMPscript</strong> é a linguagem de script do SFMC para personalização de conteúdo em emails, landing pages e SMS. Ele é processado server-side no momento do envio, permitindo lógica condicional, lookups em Data Extensions e até recomendações do MCP.
+        </p>
+
+        <div class="code-block">
+          <pre><span class="comment">%%[ /* Exemplo: personalização por perfil no email */</span>
+
+<span class="key">SET</span> @email = <span class="value">AttributeValue</span>(<span class="string">'emailaddr'</span>)
+<span class="key">SET</span> @firstName = <span class="value">AttributeValue</span>(<span class="string">'First Name'</span>)
+<span class="key">SET</span> @profile = <span class="value">AttributeValue</span>(<span class="string">'Profile'</span>)
+
+<span class="comment">/* Link para landing page com identidade passada via parâmetro */</span>
+<span class="key">SET</span> @landingUrl = <span class="value">CONCAT</span>(
+  <span class="string">'https://zavolidouglas.github.io/SalesTech-Academy/?email='</span>,
+  <span class="value">URLEncode</span>(@email),
+  <span class="string">'&profile='</span>,
+  @profile
+)
+
+<span class="comment">/* Conteúdo condicional por perfil */</span>
+<span class="key">IF</span> @profile == <span class="string">'arquiteto'</span> <span class="key">THEN</span>
+  <span class="key">SET</span> @headline = <span class="string">'Explore arquitetura MCP'</span>
+<span class="key">ELSEIF</span> @profile == <span class="string">'dev'</span> <span class="key">THEN</span>
+  <span class="key">SET</span> @headline = <span class="string">'Acesse exemplos de Event API'</span>
+<span class="key">ELSE</span>
+  <span class="key">SET</span> @headline = <span class="string">'Continue sua jornada Salesforce'</span>
+<span class="key">ENDIF</span>
+]%%
+
+<span class="comment"><!-- No HTML do email: --></span>
+&lt;h1&gt;Olá, %%=v(@firstName)=%%!&lt;/h1&gt;
+&lt;p&gt;%%=v(@headline)=%%&lt;/p&gt;
+&lt;a href="%%=v(@landingUrl)=%%"&gt;Acessar plataforma&lt;/a&gt;</pre>
+        </div>
+
+        <div class="tip-box">
+          <div style="font-size:18px;flex-shrink:0;">💡</div>
+          <div class="tip-box__text">
+            <strong>Este é o email da demo!</strong> O link gerado pelo AMPscript acima é exatamente o que será enviado para os participantes do evento — cada um recebe a URL com seu email e perfil codificados, identificando-os automaticamente no MCP ao abrir a landing page.
+          </div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="content-block">
+        <p class="content-block__label">Módulo 3</p>
+        <h2 class="content-block__title">Journey Builder — orquestrando jornadas</h2>
+        <p class="content-block__text">
+          O <strong>Journey Builder</strong> permite criar fluxos de comunicação automatizados baseados em eventos e comportamentos. Uma jornada pode ser simples (email de boas-vindas) ou complexa (onboarding multicanal com ramificações por comportamento).
+        </p>
+
+        <div class="journey-flow">
+          <div class="journey-step">
+            <div class="journey-node journey-node--trigger">
+              <div class="journey-node__title">Entry Event</div>
+              <div class="journey-node__sub">Formulário preenchido</div>
+            </div>
+          </div>
+          <div class="journey-arrow">→</div>
+          <div class="journey-step">
+            <div class="journey-node journey-node--action">
+              <div class="journey-node__title">Email 1</div>
+              <div class="journey-node__sub">Boas-vindas + link</div>
+            </div>
+          </div>
+          <div class="journey-arrow">→</div>
+          <div class="journey-step">
+            <div class="journey-node journey-node--decision">
+              <div class="journey-node__title">Abriu email?</div>
+              <div class="journey-node__sub">Decision Split</div>
+            </div>
+          </div>
+          <div class="journey-arrow">→</div>
+          <div class="journey-step">
+            <div class="journey-node journey-node--action">
+              <div class="journey-node__title">Email 2</div>
+              <div class="journey-node__sub">Conteúdo por perfil</div>
+            </div>
+          </div>
+          <div class="journey-arrow">→</div>
+          <div class="journey-step">
+            <div class="journey-node" style="border-color:var(--green-400);background:var(--green-50);">
+              <div class="journey-node__title" style="color:var(--green-900);">Conversão</div>
+              <div class="journey-node__sub">Goal achieved</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="use-case-list">
+          <div class="use-case" style="border-left-color:var(--blue-400);">
+            <div class="use-case__title">Entry Sources — como os contatos entram na jornada</div>
+            <div class="use-case__desc">API Event (tempo real), Data Extension (batch), Salesforce Object, MobileConnect, CloudPages Form. Cada source tem características de latência e volume diferentes.</div>
+          </div>
+          <div class="use-case" style="border-left-color:var(--blue-400);">
+            <div class="use-case__title">Decision Splits — ramificações inteligentes</div>
+            <div class="use-case__desc">Divide o fluxo baseado em atributos do contato, comportamento (abriu email? clicou?) ou dados externos via API. Permite jornadas altamente personalizadas por segmento.</div>
+          </div>
+          <div class="use-case" style="border-left-color:var(--blue-400);">
+            <div class="use-case__title">Einstein STO — horário ideal de envio</div>
+            <div class="use-case__desc">Einstein calcula o melhor horário para enviar o email de cada contato individualmente, maximizando taxa de abertura com base no histórico de comportamento.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="content-block">
+        <p class="content-block__label">Módulo 4</p>
+        <h2 class="content-block__title">SFMC + MCP — o loop de personalização completo</h2>
+        <p class="content-block__text">
+          A integração entre Marketing Cloud e MCP cria o loop mais completo de personalização omnicanal da Salesforce:
+        </p>
+
+        <div class="use-case-list">
+          <div class="use-case" style="border-left-color:var(--blue-400);">
+            <div class="use-case__title">Recomendações MCP dentro do email</div>
+            <div class="use-case__desc">Via AMPscript + API do MCP, é possível inserir recomendações de produtos ou conteúdo personalizadas para cada destinatário diretamente no corpo do email — processado no momento do envio.</div>
+          </div>
+          <div class="use-case" style="border-left-color:var(--blue-400);">
+            <div class="use-case__title">Comportamento no email alimenta o MCP</div>
+            <div class="use-case__desc">Aberturas e cliques do email — via tracking de pixel e click tracking do SFMC — podem ser enviados ao MCP via Event API, enriquecendo o perfil comportamental do usuário.</div>
+          </div>
+          <div class="use-case" style="border-left-color:var(--blue-400);">
+            <div class="use-case__title">MCP aciona jornadas no SFMC</div>
+            <div class="use-case__desc">Um evento no MCP (ex: usuário visitou a página de checkout 3x sem converter) pode disparar via API Event uma jornada de recuperação no Journey Builder.</div>
+          </div>
+          <div class="use-case" style="border-left-color:var(--blue-400);">
+            <div class="use-case__title">Identidade unificada via link parametrizado</div>
+            <div class="use-case__desc">Como nesta demo: o link no email carrega o email do contato como parâmetro. Ao clicar, o MCP identifica o usuário e une o perfil web com o perfil do SFMC instantaneamente.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="content-block">
+        <p class="content-block__label">Módulos 5 a 8</p>
+        <h2 class="content-block__title">Boas práticas, deliverability e escala</h2>
+
+        <div class="use-case-list">
+          <div class="use-case" style="border-left-color:var(--blue-400);">
+            <div class="use-case__title">Deliverability — o maior vilão silencioso</div>
+            <div class="use-case__desc">Taxa de entrega depende de reputação de IP/domínio, qualidade da lista e conteúdo. Configure SPF, DKIM e DMARC corretamente. Faça IP warming antes de grandes disparos.</div>
+          </div>
+          <div class="use-case" style="border-left-color:var(--blue-400);">
+            <div class="use-case__title">Data Extensions bem modeladas = jornadas escaláveis</div>
+            <div class="use-case__desc">Um modelo de dados mal projetado no Contact Builder cria gargalos de performance em jornadas com alto volume. Normalize os dados, evite DEs gigantes com muitas colunas.</div>
+          </div>
+          <div class="use-case" style="border-left-color:var(--amber-400);">
+            <div class="use-case__title">Teste sempre antes de ativar</div>
+            <div class="use-case__desc">Use Test Send para emails, Test Mode no Journey Builder e valide AMPscript no Preview antes de qualquer disparo. Um erro em produção com lista grande é custoso.</div>
+          </div>
+          <div class="use-case" style="border-left-color:var(--amber-400);">
+            <div class="use-case__title">Monitore Engagement Rate, não só OR/CTR</div>
+            <div class="use-case__desc">Open Rate perdeu confiabilidade com Apple MPP. Priorize métricas de clique, conversão e dados do MCP para medir real engajamento das campanhas.</div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+    <aside class="sidebar">
+      <div class="sidebar-card">
+        <p class="sidebar-card__title">Módulos do curso</p>
+        <div class="module-list">
+          <div class="module-item active"><div class="module-item__num">1</div><div class="module-item__info"><div class="module-item__title">Ecossistema MC</div><div class="module-item__sub">Studios e builders</div></div></div>
+          <div class="module-item"><div class="module-item__num">2</div><div class="module-item__info"><div class="module-item__title">AMPscript</div><div class="module-item__sub">Personalização server-side</div></div></div>
+          <div class="module-item"><div class="module-item__num">3</div><div class="module-item__info"><div class="module-item__title">Journey Builder</div><div class="module-item__sub">Jornadas multicanal</div></div></div>
+          <div class="module-item"><div class="module-item__num">4</div><div class="module-item__info"><div class="module-item__title">SFMC + MCP</div><div class="module-item__sub">Loop completo</div></div></div>
+          <div class="module-item"><div class="module-item__num">5</div><div class="module-item__info"><div class="module-item__title">Deliverability</div><div class="module-item__sub">Reputação e entrega</div></div></div>
+          <div class="module-item"><div class="module-item__num">6</div><div class="module-item__info"><div class="module-item__title">Data Model</div><div class="module-item__sub">DEs e Contact Builder</div></div></div>
+          <div class="module-item"><div class="module-item__num">7</div><div class="module-item__info"><div class="module-item__title">Testes e QA</div><div class="module-item__sub">Test Send e Preview</div></div></div>
+          <div class="module-item"><div class="module-item__num">8</div><div class="module-item__info"><div class="module-item__title">Métricas</div><div class="module-item__sub">OR, CTR, conversão</div></div></div>
+        </div>
+      </div>
+
+      <div class="sidebar-card" style="background:var(--blue-50);border-color:var(--blue-400);">
+        <p class="sidebar-card__title" style="color:var(--blue-900);">Seu progresso</p>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+          <div class="progress-bar" style="flex:1;"><div class="progress-bar__fill progress-bar__fill--blue" style="width:0%;"></div></div>
+          <span style="font-size:13px;font-weight:500;color:var(--blue-400);">0%</span>
+        </div>
+        <p style="font-size:12px;color:var(--blue-400);">Não iniciado</p>
+      </div>
+
+      <div class="sidebar-card">
+        <p class="sidebar-card__title">Cursos relacionados</p>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <a href="personalization.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text);">
+            <div style="width:36px;height:36px;background:var(--purple-50);border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7c5cbf" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            </div>
+            <div><p style="font-size:13px;font-weight:500;">MCP</p><p style="font-size:11px;color:var(--text-muted);">Personalização em tempo real</p></div>
+          </a>
+          <a href="data-cloud.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text);">
+            <div style="width:36px;height:36px;background:var(--green-50);border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1d9e75" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+            </div>
+            <div><p style="font-size:13px;font-weight:500;">Data Cloud</p><p style="font-size:11px;color:var(--text-muted);">CDP & Unificação</p></div>
+          </a>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <span class="logo-mark logo-mark--sm">ST</span>
+        <span class="logo-text">SalesTech<em>Academy</em></span>
+      </div>
+      <p class="footer__powered">Experiência personalizada por <strong>Salesforce Marketing Cloud Personalization</strong></p>
+      <p class="footer__note">Esta é uma demonstração ao vivo de personalização em tempo real.</p>
+    </div>
+  </footer>
+
+  <script src="js/mcp-events.js"></script>
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      STA.catalogView('marketing-cloud', 'Course');
+      STA.pageView('Marketing Cloud Course View');
+      const savedEmail = localStorage.getItem('sta_email');
+      if (savedEmail) {
+        document.getElementById('nav-cta').style.display = 'none';
+        const u = document.getElementById('nav-user');
+        u.textContent = savedEmail.split('@')[0];
+        u.style.display = 'inline';
+      }
+    });
+  </script>
+</body>
+</html>

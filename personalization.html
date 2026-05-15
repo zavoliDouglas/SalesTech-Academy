@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Marketing Cloud Personalization — SalesTech Academy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <!-- MCP BEACON: substituir em produção -->
+  <!--
+  <script type="text/javascript">var _sfaccount = 'SEU_ACCOUNT';</script>
+  <script src="https://cdn.evgnet.com/beacon/SEU_ACCOUNT/SEU_DATASET/scripts/evergage.min.js"></script>
+  -->
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .course-hero { background: linear-gradient(135deg, #2d1f6e 0%, #6b47c4 100%); color: #fff; padding: 64px 0 80px; }
+    .course-hero__back { display:inline-flex; align-items:center; gap:6px; font-size:13px; color:rgba(255,255,255,0.6); margin-bottom:24px; transition:color 0.2s; }
+    .course-hero__back:hover { color:#fff; }
+    .course-hero__badge { display:inline-flex; align-items:center; gap:6px; background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.2); color:#fff; font-size:12px; font-weight:500; padding:4px 12px; border-radius:20px; margin-bottom:16px; font-family:var(--mono); }
+    .course-hero__title { font-size:clamp(28px,4vw,44px); font-weight:300; letter-spacing:-1px; margin-bottom:16px; line-height:1.15; }
+    .course-hero__title strong { font-weight:500; }
+    .course-hero__desc { font-size:16px; color:rgba(255,255,255,0.75); max-width:560px; line-height:1.7; margin-bottom:28px; }
+    .course-hero__meta { display:flex; gap:24px; flex-wrap:wrap; }
+    .course-hero__meta-item { display:flex; align-items:center; gap:6px; font-size:13px; color:rgba(255,255,255,0.7); }
+    .course-hero__meta-item strong { color:#fff; }
+    .course-layout { display:grid; grid-template-columns:1fr 320px; gap:40px; padding:56px 0; align-items:start; }
+    .sidebar { position:sticky; top:80px; }
+    .sidebar-card { background:#fff; border:1px solid var(--border); border-radius:var(--radius-lg); padding:24px; margin-bottom:16px; }
+    .sidebar-card__title { font-size:14px; font-weight:500; margin-bottom:16px; color:var(--text); }
+    .module-list { display:flex; flex-direction:column; gap:2px; }
+    .module-item { display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:var(--radius-md); cursor:pointer; transition:background 0.15s; text-decoration:none; color:var(--text); }
+    .module-item:hover { background:var(--gray-50); }
+    .module-item.active { background:var(--purple-50); }
+    .module-item__num { width:24px; height:24px; border-radius:50%; background:var(--gray-100); display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:500; color:var(--text-muted); flex-shrink:0; font-family:var(--mono); }
+    .module-item.active .module-item__num { background:var(--purple-900); color:#fff; }
+    .module-item.done .module-item__num { background:var(--green-400); color:#fff; }
+    .module-item__info { flex:1; }
+    .module-item__title { font-size:13px; font-weight:500; }
+    .module-item__sub { font-size:11px; color:var(--text-muted); margin-top:1px; }
+    .module-item__check { color:var(--green-400); font-size:14px; }
+    .content-block { margin-bottom:48px; }
+    .content-block__label { font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:1.2px; color:var(--purple-400); font-family:var(--mono); margin-bottom:8px; }
+    .content-block__title { font-size:24px; font-weight:300; letter-spacing:-0.5px; margin-bottom:16px; }
+    .content-block__text { font-size:15px; color:var(--text-muted); line-height:1.75; margin-bottom:16px; }
+    .content-block__text strong { color:var(--text); font-weight:500; }
+    .arch-diagram { background:var(--gray-50); border:1px solid var(--border); border-radius:var(--radius-lg); padding:28px; margin:24px 0; }
+    .arch-row { display:flex; align-items:center; justify-content:center; gap:12px; flex-wrap:wrap; margin-bottom:16px; }
+    .arch-row:last-child { margin-bottom:0; }
+    .arch-node { background:#fff; border:1px solid var(--border); border-radius:var(--radius-md); padding:10px 16px; text-align:center; min-width:110px; }
+    .arch-node__title { font-size:12px; font-weight:500; color:var(--text); }
+    .arch-node__sub { font-size:10px; color:var(--text-muted); margin-top:2px; font-family:var(--mono); }
+    .arch-node--purple { border-color:var(--purple-400); background:var(--purple-50); }
+    .arch-node--purple .arch-node__title { color:var(--purple-900); }
+    .arch-node--green { border-color:var(--green-400); background:var(--green-50); }
+    .arch-node--green .arch-node__title { color:var(--green-900); }
+    .arch-node--blue { border-color:var(--blue-400); background:var(--blue-50); }
+    .arch-node--blue .arch-node__title { color:var(--blue-900); }
+    .arch-arrow { font-size:18px; color:var(--gray-400); }
+    .concept-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:20px 0; }
+    .concept-card { background:#fff; border:1px solid var(--border); border-radius:var(--radius-md); padding:16px; }
+    .concept-card__icon { font-size:20px; margin-bottom:8px; }
+    .concept-card__title { font-size:13px; font-weight:500; margin-bottom:4px; }
+    .concept-card__desc { font-size:12px; color:var(--text-muted); line-height:1.5; }
+    .code-block { background:var(--gray-900); border-radius:var(--radius-md); padding:20px 24px; margin:20px 0; overflow-x:auto; }
+    .code-block pre { font-family:var(--mono); font-size:12px; color:#e8e6e0; line-height:1.7; margin:0; white-space:pre-wrap; }
+    .code-block .comment { color:#6b7280; }
+    .code-block .key { color:#a78bfa; }
+    .code-block .value { color:#6ee7b7; }
+    .code-block .string { color:#fcd34d; }
+    .tip-box { background:var(--purple-50); border:1px solid var(--purple-100); border-radius:var(--radius-md); padding:16px 20px; margin:20px 0; display:flex; gap:12px; }
+    .tip-box__icon { font-size:18px; flex-shrink:0; margin-top:2px; }
+    .tip-box__text { font-size:13px; color:var(--purple-900); line-height:1.6; }
+    .tip-box__text strong { font-weight:500; }
+    .warning-box { background:#faeeda; border:1px solid #ef9f27; border-radius:var(--radius-md); padding:16px 20px; margin:20px 0; display:flex; gap:12px; }
+    .warning-box__text { font-size:13px; color:#633806; line-height:1.6; }
+    .use-case-list { display:flex; flex-direction:column; gap:12px; margin:20px 0; }
+    .use-case { background:#fff; border:1px solid var(--border); border-left:3px solid var(--purple-400); border-radius:0 var(--radius-md) var(--radius-md) 0; padding:14px 18px; }
+    .use-case__title { font-size:13px; font-weight:500; margin-bottom:4px; }
+    .use-case__desc { font-size:12px; color:var(--text-muted); line-height:1.5; }
+    .divider { height:1px; background:var(--border); margin:40px 0; }
+    @media (max-width:900px) { .course-layout { grid-template-columns:1fr; } .sidebar { position:static; } .concept-grid { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+
+  <!-- LIVE BANNER -->
+  <div class="event-banner" id="event-banner" style="display:none;">
+    <div class="event-banner__inner">
+      <span class="event-banner__pulse"></span>
+      <p class="event-banner__text"><strong>Você está no evento ao vivo!</strong> Esta página faz parte da demo de personalização em tempo real.</p>
+      <button class="event-banner__close" onclick="document.getElementById('event-banner').style.display='none'" aria-label="Fechar">×</button>
+    </div>
+  </div>
+
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="container navbar__inner">
+      <a href="index.html" class="navbar__logo">
+        <span class="logo-mark">ST</span>
+        <span class="logo-text">SalesTech<em>Academy</em></span>
+      </a>
+      <nav class="navbar__links">
+        <a href="index.html#cursos">Cursos</a>
+        <a href="index.html#nuvens">Nuvens</a>
+        <a href="index.html#trilhas">Trilhas</a>
+      </nav>
+      <div class="navbar__actions">
+        <span class="user-greeting" id="nav-user" style="display:none;"></span>
+        <a href="index.html#identificar" class="btn btn--outline" id="nav-cta">Começar grátis</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- COURSE HERO -->
+  <section class="course-hero">
+    <div class="container">
+      <a href="index.html" class="course-hero__back">← Voltar para home</a>
+      <div class="course-hero__badge">
+        <span style="width:6px;height:6px;background:#a78bfa;border-radius:50%;display:inline-block;"></span>
+        Marketing Cloud Personalization
+      </div>
+      <h1 class="course-hero__title">
+        Personalização em <strong>tempo real</strong><br/>
+        do zero ao produção
+      </h1>
+      <p class="course-hero__desc">
+        Entenda como o MCP coleta dados comportamentais, constrói perfis unificados e entrega experiências personalizadas em web, mobile e email — tudo em milissegundos.
+      </p>
+      <div class="course-hero__meta">
+        <div class="course-hero__meta-item">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          <span><strong>6 módulos</strong></span>
+        </div>
+        <div class="course-hero__meta-item">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span><strong>4 horas</strong> de conteúdo</span>
+        </div>
+        <div class="course-hero__meta-item">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <span>Nível <strong>Avançado</strong></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COURSE LAYOUT -->
+  <div class="container course-layout">
+
+    <!-- MAIN CONTENT -->
+    <main>
+
+      <!-- BLOCO 1: O que é o MCP -->
+      <div class="content-block">
+        <p class="content-block__label">Módulo 1</p>
+        <h2 class="content-block__title">O que é o Marketing Cloud Personalization?</h2>
+        <p class="content-block__text">
+          O <strong>Marketing Cloud Personalization (MCP)</strong> — anteriormente conhecido como Interaction Studio e Evergage — é a solução de personalização em tempo real da Salesforce. Ele captura dados comportamentais de visitantes em canais digitais e usa esses dados para entregar experiências individualizadas instantaneamente.
+        </p>
+        <p class="content-block__text">
+          O diferencial do MCP em relação a outras ferramentas de personalização está na sua capacidade de <strong>unificar identidade anônima e identificada</strong> no mesmo perfil, e tomar decisões de personalização em milissegundos — sem depender de batch ou processamento offline.
+        </p>
+
+        <div class="tip-box">
+          <div class="tip-box__icon">💡</div>
+          <div class="tip-box__text">
+            <strong>Conceito-chave:</strong> O MCP trabalha com dois estados de usuário: <em>anônimo</em> (visitante sem identificação) e <em>identificado</em> (usuário com email ou ID conhecido). No momento da identificação, os perfis são mesclados automaticamente — preservando todo o histórico comportamental anônimo.
+          </div>
+        </div>
+
+        <!-- ARQUITETURA -->
+        <div class="arch-diagram">
+          <p style="font-size:12px;font-weight:500;color:var(--text-muted);text-align:center;margin-bottom:20px;font-family:var(--mono);text-transform:uppercase;letter-spacing:1px;">Fluxo de dados — MCP</p>
+          <div class="arch-row">
+            <div class="arch-node">
+              <div class="arch-node__title">Visitante</div>
+              <div class="arch-node__sub">Web / Mobile / Email</div>
+            </div>
+            <div class="arch-arrow">→</div>
+            <div class="arch-node arch-node--purple">
+              <div class="arch-node__title">Beacon / SDK</div>
+              <div class="arch-node__sub">Coleta de eventos</div>
+            </div>
+            <div class="arch-arrow">→</div>
+            <div class="arch-node arch-node--purple">
+              <div class="arch-node__title">User Profile</div>
+              <div class="arch-node__sub">Identidade unificada</div>
+            </div>
+          </div>
+          <div class="arch-row">
+            <div style="width:110px;"></div>
+            <div style="width:12px;"></div>
+            <div class="arch-arrow" style="transform:rotate(90deg);">→</div>
+          </div>
+          <div class="arch-row">
+            <div class="arch-node arch-node--green">
+              <div class="arch-node__title">Ativação</div>
+              <div class="arch-node__sub">Campaign / Email</div>
+            </div>
+            <div class="arch-arrow">←</div>
+            <div class="arch-node arch-node--purple">
+              <div class="arch-node__title">Decision Engine</div>
+              <div class="arch-node__sub">Recipe + Rules</div>
+            </div>
+            <div class="arch-arrow">←</div>
+            <div class="arch-node arch-node--blue">
+              <div class="arch-node__title">Catalog</div>
+              <div class="arch-node__sub">Produtos / Conteúdo</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- BLOCO 2: Pilares -->
+      <div class="content-block">
+        <p class="content-block__label">Módulo 2</p>
+        <h2 class="content-block__title">Os 4 pilares do MCP</h2>
+        <p class="content-block__text">
+          Toda implementação do MCP orbita em torno de quatro conceitos fundamentais. Entender cada um deles é o que separa uma implementação rasa de uma verdadeiramente eficaz.
+        </p>
+
+        <div class="concept-grid">
+          <div class="concept-card" style="border-top:3px solid var(--purple-400);">
+            <div class="concept-card__icon">🗺️</div>
+            <div class="concept-card__title">Sitemap</div>
+            <div class="concept-card__desc">Define quais páginas e ações são rastreadas. É o mapa que diz ao MCP onde ele está e o que está acontecendo — página de produto, checkout, homepage, artigo.</div>
+          </div>
+          <div class="concept-card" style="border-top:3px solid var(--green-400);">
+            <div class="concept-card__icon">📦</div>
+            <div class="concept-card__title">Catalog</div>
+            <div class="concept-card__desc">O inventário de itens personalizáveis — produtos, artigos, cursos, ofertas. Alimenta os algoritmos de recomendação (Recipes) com metadados ricos.</div>
+          </div>
+          <div class="concept-card" style="border-top:3px solid var(--blue-400);">
+            <div class="concept-card__icon">👤</div>
+            <div class="concept-card__title">User Attributes</div>
+            <div class="concept-card__desc">Atributos do perfil do usuário — comportamentais, declarativos e inferidos. São a matéria-prima para segmentação e personalização de conteúdo.</div>
+          </div>
+          <div class="concept-card" style="border-top:3px solid var(--coral-400);">
+            <div class="concept-card__icon">📡</div>
+            <div class="concept-card__title">Event API</div>
+            <div class="concept-card__desc">API REST para enviar eventos de canais offline ou server-side — CRM, app mobile nativo, call center. Estende a coleta para além do web beacon.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- BLOCO 3: Web Campaigns -->
+      <div class="content-block">
+        <p class="content-block__label">Módulo 3</p>
+        <h2 class="content-block__title">Web Campaigns & Templates</h2>
+        <p class="content-block__text">
+          As <strong>Web Campaigns</strong> são o mecanismo de entrega de personalização no canal web. Cada campanha define: onde aparece (zona), quem vê (segmento/regra), o que aparece (experiência) e quando (schedule/trigger).
+        </p>
+        <p class="content-block__text">
+          As experiências são renderizadas via <strong>Templates</strong> — componentes HTML/CSS/JS que o MCP injeta no DOM da página em tempo real. O template recebe o contexto do usuário e decide o que renderizar.
+        </p>
+
+        <div class="code-block">
+          <pre><span class="comment">// Exemplo de Template JS — Personalização de banner</span>
+<span class="key">template</span>.<span class="key">bind</span>(<span class="key">context</span> => {
+  <span class="key">const</span> user = <span class="key">context</span>.user;
+  <span class="key">const</span> firstName = user.<span class="key">attributes</span>.<span class="string">'First Name'</span> || <span class="string">'Visitante'</span>;
+  <span class="key">const</span> profile = user.<span class="key">attributes</span>.<span class="string">'profile'</span> || <span class="string">'generic'</span>;
+
+  <span class="comment">// Conteúdo muda conforme o perfil</span>
+  <span class="key">const</span> content = {
+    <span class="string">arquiteto</span>: <span class="string">'Explore arquitetura de soluções MCP'</span>,
+    <span class="string">dev</span>: <span class="string">'Acesse a Event API e exemplos de código'</span>,
+    <span class="string">admin</span>: <span class="string">'Configure sua primeira Web Campaign'</span>
+  };
+
+  <span class="key">return</span> {
+    <span class="string">headline</span>: <span class="string">`Olá, ${firstName}!`</span>,
+    <span class="string">message</span>: content[profile] || content.<span class="string">admin</span>
+  };
+});</pre>
+        </div>
+
+        <div class="tip-box">
+          <div class="tip-box__icon">🎯</div>
+          <div class="tip-box__text">
+            <strong>Boas práticas:</strong> Sempre defina uma experiência de controle (sem personalização) para seus testes A/B. O MCP distribui automaticamente o tráfego entre variantes e reporta lift estatístico.
+          </div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- BLOCO 4: Recipes -->
+      <div class="content-block">
+        <p class="content-block__label">Módulo 4</p>
+        <h2 class="content-block__title">Recipes — Algoritmos de Recomendação</h2>
+        <p class="content-block__text">
+          Os <strong>Recipes</strong> são os algoritmos de recomendação do MCP. Eles combinam sinais comportamentais do usuário com metadados do Catalog para sugerir os itens mais relevantes em cada momento.
+        </p>
+
+        <div class="use-case-list">
+          <div class="use-case">
+            <div class="use-case__title">Collaborative Filtering</div>
+            <div class="use-case__desc">Recomenda itens que usuários com comportamento similar consumiram. Ideal para "Quem viu isso também viu..."</div>
+          </div>
+          <div class="use-case">
+            <div class="use-case__title">Content Affinity</div>
+            <div class="use-case__desc">Analisa os atributos dos itens visualizados e recomenda itens com atributos similares. Perfeito para recomendações por categoria ou tema.</div>
+          </div>
+          <div class="use-case">
+            <div class="use-case__title">Trending & Popular</div>
+            <div class="use-case__desc">Recomenda itens com alta taxa de engajamento no momento. Útil para usuários novos sem histórico suficiente (cold start).</div>
+          </div>
+          <div class="use-case">
+            <div class="use-case__title">Einstein Decisions</div>
+            <div class="use-case__desc">Usa machine learning para escolher automaticamente o melhor algoritmo por usuário. Requer volume mínimo de dados para ativação.</div>
+          </div>
+        </div>
+
+        <div class="warning-box">
+          <div style="font-size:18px;flex-shrink:0;">⚠️</div>
+          <div class="warning-box__text">
+            <strong>Cold Start:</strong> Recipes baseados em comportamento precisam de dados históricos para funcionar bem. Para novos usuários ou catálogos pequenos, combine com regras de negócio (boosting/blocking) para garantir relevância desde o primeiro acesso.
+          </div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- BLOCO 5: Integrações -->
+      <div class="content-block">
+        <p class="content-block__label">Módulo 5</p>
+        <h2 class="content-block__title">Integrações no ecossistema Salesforce</h2>
+        <p class="content-block__text">
+          O MCP não opera em isolamento — seu poder se multiplica quando conectado às demais nuvens Salesforce.
+        </p>
+
+        <div class="arch-diagram">
+          <div class="arch-row">
+            <div class="arch-node arch-node--purple">
+              <div class="arch-node__title">MCP</div>
+              <div class="arch-node__sub">Hub central</div>
+            </div>
+            <div class="arch-arrow">⇄</div>
+            <div class="arch-node arch-node--green">
+              <div class="arch-node__title">Data Cloud</div>
+              <div class="arch-node__sub">Segmentos CDP</div>
+            </div>
+          </div>
+          <div class="arch-row" style="margin-top:10px;">
+            <div class="arch-node arch-node--blue">
+              <div class="arch-node__title">Marketing Cloud</div>
+              <div class="arch-node__sub">Email / Jornadas</div>
+            </div>
+            <div class="arch-arrow">⇄</div>
+            <div class="arch-node arch-node--purple">
+              <div class="arch-node__title">MCP</div>
+              <div class="arch-node__sub">Perfil unificado</div>
+            </div>
+            <div class="arch-arrow">⇄</div>
+            <div class="arch-node" style="border-color:var(--coral-400);background:var(--coral-50);">
+              <div class="arch-node__title" style="color:var(--coral-400);">Sales/Service</div>
+              <div class="arch-node__sub">CRM Events</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="concept-grid">
+          <div class="concept-card">
+            <div class="concept-card__title">MCP + Data Cloud</div>
+            <div class="concept-card__desc">Segmentos do CDP ativam regras no MCP. Perfis unificados do Data Cloud enriquecem User Attributes. Eventos do MCP retroalimentam o CDP.</div>
+          </div>
+          <div class="concept-card">
+            <div class="concept-card__title">MCP + Marketing Cloud</div>
+            <div class="concept-card__desc">Recomendações do MCP dentro de emails via AMPscript. Comportamento no email (abertura, clique) alimenta o perfil do MCP.</div>
+          </div>
+          <div class="concept-card">
+            <div class="concept-card__title">MCP + Sales Cloud</div>
+            <div class="concept-card__desc">Dados de CRM (oportunidades, stage) enriquecem o perfil via Event API. MCP personaliza portal do cliente com base no contexto comercial.</div>
+          </div>
+          <div class="concept-card">
+            <div class="concept-card__title">MCP + Service Cloud</div>
+            <div class="concept-card__desc">Histórico de casos e interações de atendimento alimentam o perfil. MCP personaliza conteúdo de suporte baseado em problemas anteriores.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- BLOCO 6: Boas Práticas -->
+      <div class="content-block">
+        <p class="content-block__label">Módulo 6</p>
+        <h2 class="content-block__title">Boas práticas e lições de projetos reais</h2>
+
+        <div class="use-case-list">
+          <div class="use-case" style="border-left-color:var(--green-400);">
+            <div class="use-case__title">Comece pelo Sitemap, não pelas campanhas</div>
+            <div class="use-case__desc">Um Sitemap mal configurado invalida toda a estratégia de personalização. Antes de criar qualquer campanha, mapeie exaustivamente cada tipo de página e ação relevante do site.</div>
+          </div>
+          <div class="use-case" style="border-left-color:var(--green-400);">
+            <div class="use-case__title">Nomeie eventos e atributos com convenção clara</div>
+            <div class="use-case__desc">Use snake_case, prefixos por área de negócio e documentação centralizada. Nomes como "btn_click" são inúteis em 6 meses. Prefira "checkout_add_to_cart_click".</div>
+          </div>
+          <div class="use-case" style="border-left-color:var(--amber-400);">
+            <div class="use-case__title">Sempre tenha uma experiência de controle</div>
+            <div class="use-case__desc">Nunca publique uma campanha sem variante de controle. Sem isso, você não consegue medir o impacto real da personalização e justificar o investimento.</div>
+          </div>
+          <div class="use-case" style="border-left-color:var(--amber-400);">
+            <div class="use-case__title">Respeite o volume mínimo para ML</div>
+            <div class="use-case__desc">Einstein Decisions e Collaborative Filtering precisam de dados. Em catálogos pequenos (&lt;100 itens) ou sites novos, regras determinísticas superam ML na maioria dos casos.</div>
+          </div>
+          <div class="use-case" style="border-left-color:var(--coral-400);">
+            <div class="use-case__title">Cuidado com o "over-personalization"</div>
+            <div class="use-case__desc">Personalização excessiva pode parecer invasiva. Mantenha um equilíbrio — nem todo elemento da página precisa ser dinâmico. Personalize onde o contexto do usuário realmente importa.</div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-card">
+        <p class="sidebar-card__title">Módulos do curso</p>
+        <div class="module-list">
+          <div class="module-item done">
+            <div class="module-item__num">✓</div>
+            <div class="module-item__info">
+              <div class="module-item__title">O que é o MCP</div>
+              <div class="module-item__sub">Conceitos e posicionamento</div>
+            </div>
+          </div>
+          <div class="module-item done">
+            <div class="module-item__num">✓</div>
+            <div class="module-item__info">
+              <div class="module-item__title">Os 4 pilares</div>
+              <div class="module-item__sub">Sitemap, Catalog, Attrs, API</div>
+            </div>
+          </div>
+          <div class="module-item active">
+            <div class="module-item__num">3</div>
+            <div class="module-item__info">
+              <div class="module-item__title">Web Campaigns</div>
+              <div class="module-item__sub">Templates e experiências</div>
+            </div>
+          </div>
+          <div class="module-item">
+            <div class="module-item__num">4</div>
+            <div class="module-item__info">
+              <div class="module-item__title">Recipes</div>
+              <div class="module-item__sub">Algoritmos de recomendação</div>
+            </div>
+          </div>
+          <div class="module-item">
+            <div class="module-item__num">5</div>
+            <div class="module-item__info">
+              <div class="module-item__title">Integrações</div>
+              <div class="module-item__sub">Data Cloud, MC, CRM</div>
+            </div>
+          </div>
+          <div class="module-item">
+            <div class="module-item__num">6</div>
+            <div class="module-item__info">
+              <div class="module-item__title">Boas práticas</div>
+              <div class="module-item__sub">Lições de projetos reais</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar-card" style="background:var(--purple-50);border-color:var(--purple-100);">
+        <p class="sidebar-card__title" style="color:var(--purple-900);">Seu progresso</p>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+          <div class="progress-bar" style="flex:1;">
+            <div class="progress-bar__fill" style="width:65%;"></div>
+          </div>
+          <span style="font-size:13px;font-weight:500;color:var(--purple-600);" id="sidebar-progress">65%</span>
+        </div>
+        <p style="font-size:12px;color:var(--purple-600);">2 de 6 módulos concluídos</p>
+      </div>
+
+      <div class="sidebar-card">
+        <p class="sidebar-card__title">Próximos cursos</p>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <a href="data-cloud.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text);">
+            <div style="width:36px;height:36px;background:var(--green-50);border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1d9e75" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+            </div>
+            <div>
+              <p style="font-size:13px;font-weight:500;">Data Cloud</p>
+              <p style="font-size:11px;color:var(--text-muted);">CDP & Unificação</p>
+            </div>
+          </a>
+          <a href="marketing-cloud.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text);">
+            <div style="width:36px;height:36px;background:var(--blue-50);border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#185fa5" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <div>
+              <p style="font-size:13px;font-weight:500;">Marketing Cloud</p>
+              <p style="font-size:11px;color:var(--text-muted);">Jornadas & Email</p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <span class="logo-mark logo-mark--sm">ST</span>
+        <span class="logo-text">SalesTech<em>Academy</em></span>
+      </div>
+      <p class="footer__powered">Experiência personalizada por <strong>Salesforce Marketing Cloud Personalization</strong></p>
+      <p class="footer__note">Esta é uma demonstração ao vivo de personalização em tempo real.</p>
+    </div>
+  </footer>
+
+  <script src="js/mcp-events.js"></script>
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      STA.catalogView('personalization', 'Course');
+      STA.pageView('Personalization Course View');
+
+      const savedEmail = localStorage.getItem('sta_email');
+      const savedProfile = localStorage.getItem('sta_profile');
+      if (savedEmail) {
+        document.getElementById('nav-cta').style.display = 'none';
+        const u = document.getElementById('nav-user');
+        u.textContent = savedEmail.split('@')[0];
+        u.style.display = 'inline';
+        document.getElementById('sidebar-progress').textContent = '65%';
+      }
+    });
+  </script>
+</body>
+</html>
