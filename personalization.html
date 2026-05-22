@@ -10,7 +10,6 @@
   </script>
   <script type="text/javascript" src="//cdn.evgnet.com/beacon/partnercapgeminibrasil/salestech_academy/scripts/evergage.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
-  <!-- MCP BEACON: substituir em produção -->
   <!--
   <script type="text/javascript">var _sfaccount = 'SEU_ACCOUNT';</script>
   <script src="https://cdn.evgnet.com/beacon/SEU_ACCOUNT/SEU_DATASET/scripts/evergage.min.js"></script>
@@ -109,8 +108,10 @@
         <a href="index.html#trilhas">Trilhas</a>
       </nav>
       <div class="navbar__actions">
-        <span class="user-greeting" id="nav-user" style="display:none;"></span>
-        <a href="index.html#identificar" class="btn btn--outline" id="nav-cta">Começar grátis</a>
+        <!-- MCP injeta: nome do usuário ou CTA -->
+        <div id="navbar-cta">
+          <a href="index.html#identificar" class="btn btn--outline">Começar grátis</a>
+        </div>
       </div>
     </div>
   </header>
@@ -519,20 +520,5 @@
   </footer>
 
   <script src="js/mcp-events.js"></script>
-  <script>
-    window.addEventListener('DOMContentLoaded', () => {
-     
-
-      const savedEmail = localStorage.getItem('sta_email');
-      const savedProfile = localStorage.getItem('sta_profile');
-      if (savedEmail) {
-        document.getElementById('nav-cta').style.display = 'none';
-        const u = document.getElementById('nav-user');
-        u.textContent = savedEmail.split('@')[0];
-        u.style.display = 'inline';
-        document.getElementById('sidebar-progress').textContent = '65%';
-      }
-    });
-  </script>
 </body>
 </html>

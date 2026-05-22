@@ -7,22 +7,28 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
-  
-  
   <script type="text/javascript">
     var _sfaccount = '500008088';
   </script>
-<script type="text/javascript" src="//cdn.evgnet.com/beacon/partnercapgeminibrasil/salestech_academy/scripts/evergage.min.js"></script>  
+  <script type="text/javascript" src="//cdn.evgnet.com/beacon/partnercapgeminibrasil/salestech_academy/scripts/evergage.min.js"></script>
 
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
 
-  <!-- ==================== LIVE EVENT BANNER ==================== -->
-  <!-- MCP Campaign Zone: event-banner | Rule: segment "event_attendees" -->
+  <!-- ============================================================
+       MCP ZONE: event_banner
+       Campanha: SalesTech — Event Banner
+       Ativado manualmente durante a demo
+  ============================================================ -->
   <div id="event-banner"></div>
 
-  <!-- ==================== NAVBAR ==================== -->
+  <!-- ============================================================
+       NAVBAR
+       MCP ZONE: navbar_cta
+       Anônimo  → "Começar grátis"
+       Identificado → nome do usuário
+  ============================================================ -->
   <header class="navbar">
     <div class="container navbar__inner">
       <a href="index.html" class="navbar__logo">
@@ -34,10 +40,11 @@
         <a href="#nuvens">Nuvens</a>
         <a href="#trilhas">Trilhas</a>
       </nav>
-      <!-- MCP Zone: navbar-cta | anon = "Começar grátis" | identified = "Minha conta, {name}" -->
       <div class="navbar__actions">
-        <span class="user-greeting" id="nav-user" style="display:none;"></span>
-        <a href="#identificar" class="btn btn--outline" id="nav-cta">Começar grátis</a>
+        <!-- MCP injeta aqui: nome do usuário ou CTA "Começar grátis" -->
+        <div id="navbar-cta">
+          <a href="#identificar" class="btn btn--outline">Começar grátis</a>
+        </div>
       </div>
       <button class="navbar__hamburger" id="hamburger" aria-label="Menu">
         <span></span><span></span><span></span>
@@ -45,40 +52,41 @@
     </div>
   </header>
 
-  <!-- ==================== HERO ==================== -->
+  <!-- ============================================================
+       HERO
+       MCP ZONE: hero_greeting  → eyebrow personalizado por perfil
+       MCP ZONE: hero_content   → título, subtítulo e CTA por perfil
+       MCP ZONE: profile_tags   → tags de interesse (só identificados)
+  ============================================================ -->
   <section class="hero">
     <div class="container hero__inner">
       <div class="hero__content">
 
-        <!-- MCP Zone: hero-eyebrow | anon = hidden | identified = "Bem-vindo de volta, {name}" -->
-        <div class="hero__eyebrow" id="hero-eyebrow" style="opacity:0;">
-          <span class="live-dot"></span>
-          <span id="hero-greeting">Bem-vindo de volta</span>
-        </div>
+        <!-- MCP injeta: eyebrow com greeting personalizado -->
+        <div id="hero-greeting"></div>
 
-        <!-- MCP Zone: hero-headline | anon = genérico | identified = personalizado por perfil -->
-        <h1 class="hero__title" id="hero-title">
+        <!-- Título padrão — MCP pode substituir via hero_content -->
+        <h1 class="hero__title">
           Aprenda as nuvens<br/>
           <span class="highlight">Salesforce</span> que<br/>
           o mercado exige
         </h1>
 
-        <!-- MCP Zone: hero-sub | personalizado por perfil (Admin / Dev / Arquiteto / Negócio) -->
+        <!-- Subtítulo padrão — MCP pode substituir via hero_content -->
         <p class="hero__sub" id="hero-sub">
           Conteúdo técnico e estratégico sobre o ecossistema Salesforce — com foco em personalização, dados e automação.
         </p>
 
         <div class="hero__ctas">
-          <a href="#cursos" class="btn btn--primary" id="hero-cta-primary">Explorar cursos</a>
+          <!-- MCP ZONE: hero_cta — CTA personalizado por perfil -->
+          <div id="hero-cta">
+            <a href="#cursos" class="btn btn--primary">Explorar cursos</a>
+          </div>
           <a href="#nuvens" class="btn btn--ghost">Ver trilhas</a>
         </div>
 
-        <!-- MCP Zone: profile-tags | visível apenas para identificados -->
-        <div class="profile-tags" id="profile-tags" style="display:none;">
-          <span class="profile-tag__label">Seus interesses:</span>
-          <span class="profile-tag" id="tag-1"></span>
-          <span class="profile-tag" id="tag-2"></span>
-        </div>
+        <!-- MCP ZONE: profile_tags — visível apenas para identificados -->
+        <div id="profile-tags"></div>
 
       </div>
       <div class="hero__visual">
@@ -115,45 +123,36 @@
     </div>
   </section>
 
-  <!-- ==================== ANON IDENTIFICATION ZONE ==================== -->
-  <!-- MCP Zone: identify-banner | visível APENAS para anônimos -->
-  <section class="identify-zone" id="identificar">
-    <div class="container">
-      <div class="identify-zone__inner">
-        <div class="identify-zone__text">
-          <h3>Personalize sua experiência</h3>
-          <p>Informe seu email e veja os cursos recomendados para o seu perfil em tempo real.</p>
-        </div>
-        <form class="identify-zone__form" onsubmit="handleIdentify(event)">
-          <input type="email" id="identify-email" placeholder="seu@email.com" required />
-          <select id="identify-profile">
-            <option value="">Seu perfil</option>
-            <option value="admin">Admin / Consultor</option>
-            <option value="dev">Desenvolvedor</option>
-            <option value="arquiteto">Arquiteto</option>
-            <option value="negocio">Negócio / Marketing</option>
-          </select>
-          <button type="submit" class="btn btn--primary">Personalizar →</button>
-        </form>
-      </div>
-    </div>
-  </section>
+  <!-- ============================================================
+       MCP ZONE: identify_zone
+       Visível APENAS para visitantes anônimos
+       MCP suprime após identificação
+  ============================================================ -->
+  <div id="identify-zone"></div>
 
-  <!-- ==================== RECOMMENDED COURSES ==================== -->
-  <!-- MCP Zone: recommended-courses | Recipe baseado em perfil + comportamento -->
+  <!-- ============================================================
+       CURSOS
+       MCP ZONE: recommended_courses
+       Recipe de recomendação por perfil + comportamento
+       Seção estática abaixo como fallback para anônimos
+  ============================================================ -->
   <section class="section" id="cursos">
     <div class="container">
-      <div class="section__header">
-        <div>
-          <p class="section__eyebrow" id="rec-eyebrow">Todos os cursos</p>
-          <h2 class="section__title" id="rec-title">Explore o ecossistema</h2>
+
+      <!-- MCP ZONE: courses_header — eyebrow e título personalizados -->
+      <div id="courses-header">
+        <div class="section__header">
+          <div>
+            <p class="section__eyebrow">Todos os cursos</p>
+            <h2 class="section__title">Explore o ecossistema</h2>
+          </div>
+          <a href="#" class="btn btn--ghost btn--sm">Ver todos →</a>
         </div>
-        <a href="#" class="btn btn--ghost btn--sm">Ver todos →</a>
       </div>
 
-      <div class="courses-grid" id="courses-grid">
-
-        <!-- Card 1 — Personalization (destaque para arquitetos) -->
+      <!-- MCP ZONE: recommended_courses — cards injetados pelo recipe -->
+      <div id="courses-grid">
+        <!-- Cards estáticos — fallback para anônimos sem campanha ativa -->
         <article class="course-card course-card--featured" data-catalog="personalization">
           <a href="personalization.html">
             <div class="course-card__header" style="background: linear-gradient(135deg,#2d1f6e,#6b47c4);">
@@ -171,19 +170,12 @@
               <p class="course-card__desc">Arquitetura, Sitemap, Catalog, Event API e Web Campaigns. Do zero ao produção.</p>
               <div class="course-card__meta">
                 <span>6 módulos · 4h</span>
-                <div class="course-card__progress">
-                  <div class="progress-bar">
-                    <div class="progress-bar__fill" style="width:65%" id="prog-mcp"></div>
-                  </div>
-                  <span class="progress-label" id="prog-mcp-label">65%</span>
-                </div>
               </div>
             </div>
           </a>
         </article>
 
-        <!-- Card 2 — Data Cloud -->
-        <article class="course-card" data-catalog="data-cloud">
+        <article class="course-card" data-catalog="data_cloud">
           <a href="data-cloud.html">
             <div class="course-card__header" style="background: linear-gradient(135deg,#0a4d38,#1d9e75);">
               <div class="course-card__icon">
@@ -197,22 +189,15 @@
                 <span class="tag tag--level">Intermediário</span>
               </div>
               <h3 class="course-card__title">Data Cloud & CDP</h3>
-              <p class="course-card__desc">Unificação de identidade, segmentação em tempo real e ativação de dados no ecossistema Salesforce.</p>
+              <p class="course-card__desc">Unificação de identidade, segmentação em tempo real e ativação de dados.</p>
               <div class="course-card__meta">
                 <span>5 módulos · 3h</span>
-                <div class="course-card__progress">
-                  <div class="progress-bar">
-                    <div class="progress-bar__fill progress-bar__fill--green" style="width:20%" id="prog-dc"></div>
-                  </div>
-                  <span class="progress-label" id="prog-dc-label">20%</span>
-                </div>
               </div>
             </div>
           </a>
         </article>
 
-        <!-- Card 3 — Marketing Cloud -->
-        <article class="course-card" data-catalog="marketing-cloud">
+        <article class="course-card" data-catalog="marketing_cloud">
           <a href="marketing-cloud.html">
             <div class="course-card__header" style="background: linear-gradient(135deg,#0c3460,#185fa5);">
               <div class="course-card__icon">
@@ -228,20 +213,13 @@
               <p class="course-card__desc">Email Studio, Journey Builder, AMPscript e automações para campanhas em escala.</p>
               <div class="course-card__meta">
                 <span>8 módulos · 5h</span>
-                <div class="course-card__progress">
-                  <div class="progress-bar">
-                    <div class="progress-bar__fill progress-bar__fill--blue" style="width:0%"></div>
-                  </div>
-                  <span class="progress-label">Não iniciado</span>
-                </div>
               </div>
             </div>
           </a>
         </article>
 
-        <!-- Card 4 — Sales Cloud -->
-        <article class="course-card" data-catalog="sales-cloud">
-          <a href="#" onclick="trackClick('sales-cloud'); return false;">
+        <article class="course-card" data-catalog="sales_cloud">
+          <a href="#" onclick="return false;">
             <div class="course-card__header" style="background: linear-gradient(135deg,#5c1a00,#d85a30);">
               <div class="course-card__icon">
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
@@ -260,47 +238,22 @@
             </div>
           </a>
         </article>
-
       </div>
+
     </div>
   </section>
 
-  <!-- ==================== CONTINUE WHERE YOU LEFT OFF ==================== -->
-  <!-- MCP Zone: continue-section | visível apenas para identificados com comportamento registrado -->
-  <section class="section section--alt" id="continuar" style="display:none;">
-    <div class="container">
-      <div class="section__header">
-        <div>
-          <p class="section__eyebrow">Baseado na sua navegação</p>
-          <h2 class="section__title">Continue de onde parou</h2>
-        </div>
-      </div>
-      <div class="continue-grid" id="continue-grid">
-        <div class="continue-card">
-          <div class="continue-card__icon" style="background:#f0ebff;">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7c5cbf" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-          </div>
-          <div class="continue-card__info">
-            <p class="continue-card__title" id="continue-title-1">Web Campaigns — Configuração</p>
-            <p class="continue-card__sub" id="continue-sub-1">Aula 3 de 6 · 12 min restantes</p>
-          </div>
-          <a href="personalization.html" class="btn btn--outline btn--sm">Continuar</a>
-        </div>
-        <div class="continue-card">
-          <div class="continue-card__icon" style="background:#e1f5ee;">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1d9e75" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
-          </div>
-          <div class="continue-card__info">
-            <p class="continue-card__title">Event API — Hands On</p>
-            <p class="continue-card__sub">Salvo para depois</p>
-          </div>
-          <a href="personalization.html" class="btn btn--outline btn--sm">Ver</a>
-        </div>
-      </div>
-    </div>
-  </section>
+  <!-- ============================================================
+       MCP ZONE: continue_section
+       Visível APENAS para identificados com comportamento registrado
+       MCP injeta com base no lastCourseViewed
+  ============================================================ -->
+  <div id="continue-section"></div>
 
-  <!-- ==================== NUVENS CATALOG ==================== -->
+  <!-- ============================================================
+       NUVENS — catálogo estático
+       Cliques alimentam o catalog affinity no MCP
+  ============================================================ -->
   <section class="section" id="nuvens">
     <div class="container">
       <div class="section__header">
@@ -310,7 +263,7 @@
         </div>
       </div>
       <div class="clouds-grid">
-        <a href="personalization.html" class="cloud-card" data-catalog="personalization" onclick="trackCatalogView('personalization')">
+        <a href="personalization.html" class="cloud-card" data-catalog="personalization">
           <div class="cloud-card__icon" style="background:#f0ebff; color:#7c5cbf;">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
           </div>
@@ -318,7 +271,7 @@
           <p>Personalização em tempo real</p>
           <span class="cloud-card__arrow">→</span>
         </a>
-        <a href="data-cloud.html" class="cloud-card" data-catalog="data-cloud" onclick="trackCatalogView('data-cloud')">
+        <a href="data-cloud.html" class="cloud-card" data-catalog="data_cloud">
           <div class="cloud-card__icon" style="background:#e1f5ee; color:#1d9e75;">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
           </div>
@@ -326,7 +279,7 @@
           <p>CDP & Unificação de dados</p>
           <span class="cloud-card__arrow">→</span>
         </a>
-        <a href="marketing-cloud.html" class="cloud-card" data-catalog="marketing-cloud" onclick="trackCatalogView('marketing-cloud')">
+        <a href="marketing-cloud.html" class="cloud-card" data-catalog="marketing_cloud">
           <div class="cloud-card__icon" style="background:#e8f0fb; color:#185fa5;">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
           </div>
@@ -334,7 +287,7 @@
           <p>Jornadas & Automação</p>
           <span class="cloud-card__arrow">→</span>
         </a>
-        <a href="#" class="cloud-card" data-catalog="sales-cloud" onclick="trackCatalogView('sales-cloud'); return false;">
+        <a href="#" class="cloud-card" data-catalog="sales_cloud" onclick="return false;">
           <div class="cloud-card__icon" style="background:#faece7; color:#d85a30;">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
           </div>
@@ -342,7 +295,7 @@
           <p>CRM & Pipeline</p>
           <span class="cloud-card__arrow">→</span>
         </a>
-        <a href="#" class="cloud-card" data-catalog="service-cloud" onclick="trackCatalogView('service-cloud'); return false;">
+        <a href="#" class="cloud-card" data-catalog="service_cloud" onclick="return false;">
           <div class="cloud-card__icon" style="background:#faeeda; color:#ba7517;">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
           </div>
@@ -362,7 +315,7 @@
     </div>
   </section>
 
-  <!-- ==================== FOOTER ==================== -->
+  <!-- FOOTER -->
   <footer class="footer">
     <div class="container footer__inner">
       <div class="footer__brand">
@@ -379,123 +332,16 @@
 
   <script src="js/mcp-events.js"></script>
   <script>
-    // ============================================
-    // SIMULAÇÃO DE PERSONALIZAÇÃO (demo mode)
-    // Em produção, este bloco é substituído pelo
-    // MCP via Web Campaign + Template JS
-    // ============================================
-
-    const urlParams = new URLSearchParams(window.location.search);
-    const emailParam = urlParams.get('email');
-    const profileParam = urlParams.get('profile') || localStorage.getItem('sta_profile');
-
-    const profiles = {
-      admin: {
-        name: 'Admin',
-        greeting: 'Pronto para sua próxima certificação?',
-        sub: 'Conteúdo selecionado para Admins e Consultores Salesforce.',
-        tags: ['Sales Cloud', 'Service Cloud'],
-        cta: 'Ver trilha Admin'
-      },
-      dev: {
-        name: 'Dev',
-        greeting: 'Vamos codar hoje?',
-        sub: 'APIs, integrações e desenvolvimento no ecossistema Salesforce.',
-        tags: ['Event API', 'Apex'],
-        cta: 'Ver trilha Dev'
-      },
-      arquiteto: {
-        name: 'Arquiteto',
-        greeting: 'Bem-vindo de volta, Arquiteto',
-        sub: 'Arquitetura de soluções, decisões de design e integrações enterprise.',
-        tags: ['MCP', 'Data Cloud'],
-        cta: 'Continuar trilha'
-      },
-      negocio: {
-        name: 'Negócio',
-        greeting: 'Bom ver você por aqui!',
-        sub: 'Estratégia, ROI e casos de uso de personalização e automação.',
-        tags: ['Personalização', 'Jornadas'],
-        cta: 'Explorar casos de uso'
-      }
-    };
-
-    function applyPersonalization(email, profile) {
-      const p = profiles[profile];
-      if (!p) return;
-
-      // Hero
-      document.getElementById('hero-eyebrow').style.opacity = '1';
-      document.getElementById('hero-greeting').textContent = p.greeting;
-      document.getElementById('hero-sub').textContent = p.sub;
-      document.getElementById('hero-cta-primary').textContent = p.cta;
-
-      // Nav
-      document.getElementById('nav-cta').style.display = 'none';
-      const userEl = document.getElementById('nav-user');
-      userEl.textContent = email ? email.split('@')[0] : p.name;
-      userEl.style.display = 'inline';
-
-      // Profile tags
-      const tagsEl = document.getElementById('profile-tags');
-      tagsEl.style.display = 'flex';
-      document.getElementById('tag-1').textContent = p.tags[0];
-      document.getElementById('tag-2').textContent = p.tags[1];
-
-      // Hide identify zone
-      document.getElementById('identificar').style.display = 'none';
-
-      // Show continue section
-      document.getElementById('continuar').style.display = 'block';
-
-      // Rec eyebrow
-      document.getElementById('rec-eyebrow').textContent = 'Recomendado para você';
-      document.getElementById('rec-title').textContent = 'Sua trilha personalizada';
-
-      // Save
-      localStorage.setItem('sta_profile', profile);
-      if (email) localStorage.setItem('sta_email', email);
-    }
-
-    function handleIdentify(e) {
-      e.preventDefault();
-      const email = document.getElementById('identify-email').value;
-      const profile = document.getElementById('identify-profile').value || 'admin';
-
-      // MCP Identity call — em produção via Evergage.sendEvent
-      if (window.Evergage) {
-        Evergage.sendEvent({
-          action: "Identify User",
-          user: { id: email, attributes: { profile: profile } }
-        });
-      }
-
-      applyPersonalization(email, profile);
-      trackEvent('identify', { email, profile });
-      document.getElementById('continuar').scrollIntoView({ behavior: 'smooth' });
-    }
-
-    function trackCatalogView(item) {
-      trackEvent('catalog_view', { item });
-    }
-
-    // Init on load
+    // Hamburger menu — única lógica que permanece no site
     window.addEventListener('DOMContentLoaded', () => {
-      const savedEmail = emailParam || localStorage.getItem('sta_email');
-      const savedProfile = profileParam || localStorage.getItem('sta_profile');
-      if (savedEmail && savedProfile) {
-        applyPersonalization(savedEmail, savedProfile);
-      }
+      document.getElementById('hamburger').addEventListener('click', () => {
+        document.querySelector('.navbar__links').classList.toggle('open');
+      });
 
       // Animate floating cards
       document.querySelectorAll('.floating-card').forEach((card, i) => {
         card.style.animationDelay = `${i * 0.15}s`;
         card.classList.add('fade-in');
-      });
-
-      // Hamburger menu
-      document.getElementById('hamburger').addEventListener('click', () => {
-        document.querySelector('.navbar__links').classList.toggle('open');
       });
 
       // Animate sections on scroll

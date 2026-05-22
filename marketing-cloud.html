@@ -95,8 +95,10 @@
         <a href="index.html#trilhas">Trilhas</a>
       </nav>
       <div class="navbar__actions">
-        <span class="user-greeting" id="nav-user" style="display:none;"></span>
-        <a href="index.html#identificar" class="btn btn--outline" id="nav-cta">Começar grátis</a>
+        <!-- MCP injeta: nome do usuário ou CTA -->
+        <div id="navbar-cta">
+          <a href="index.html#identificar" class="btn btn--outline">Começar grátis</a>
+        </div>
       </div>
     </div>
   </header>
@@ -402,17 +404,5 @@
   </footer>
 
   <script src="js/mcp-events.js"></script>
-  <script>
-    window.addEventListener('DOMContentLoaded', () => {
-      
-      const savedEmail = localStorage.getItem('sta_email');
-      if (savedEmail) {
-        document.getElementById('nav-cta').style.display = 'none';
-        const u = document.getElementById('nav-user');
-        u.textContent = savedEmail.split('@')[0];
-        u.style.display = 'inline';
-      }
-    });
-  </script>
 </body>
 </html>
