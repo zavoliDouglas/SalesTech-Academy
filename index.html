@@ -43,7 +43,7 @@
       <div class="navbar__actions">
         <!-- MCP injeta aqui: nome do usuário ou CTA "Começar grátis" -->
         <div id="navbar-cta">
-          <a href="#identificar" class="btn btn--outline">Começar grátis</a>
+          <a href="form.html" class="btn btn--outline">Começar grátis</a>
         </div>
       </div>
       <button class="navbar__hamburger" id="hamburger" aria-label="Menu">
@@ -124,35 +124,49 @@
   </section>
 
   <!-- ============================================================
-       MCP ZONE: identify_zone
-       Visível APENAS para visitantes anônimos
-       MCP suprime após identificação
+       MCP ZONE: continue_section
+       Visível APENAS para identificados com lastCourseViewed
+       MCP injeta com base no último curso visitado
   ============================================================ -->
-  <section class="identify-zone" id="identify-zone"></section>
+  <section class="section section--alt" id="continue-section"></section>
 
   <!-- ============================================================
-       CURSOS
        MCP ZONE: recommended_courses
        Recipe de recomendação por perfil + comportamento
-       Seção estática abaixo como fallback para anônimos
+       Visível para identificados — MCP injeta os cards
+  ============================================================ -->
+  <section class="section" id="recommended-section">
+    <div class="container">
+      <div id="courses-header-rec">
+        <div class="section__header">
+          <div>
+            <p class="section__eyebrow" id="rec-eyebrow">Recomendado para você</p>
+            <h2 class="section__title" id="rec-title">Sua trilha personalizada</h2>
+          </div>
+          <a href="#cursos" class="btn btn--ghost btn--sm">Ver todos →</a>
+        </div>
+      </div>
+      <!-- MCP ZONE: recommended_courses — cards injetados pelo recipe -->
+      <div id="recommended-courses" class="courses-grid"></div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       TODOS OS CURSOS
+       Seção estática — fallback e catálogo completo
   ============================================================ -->
   <section class="section" id="cursos">
     <div class="container">
 
-      <!-- MCP ZONE: courses_header — eyebrow e título personalizados -->
-      <div id="courses-header">
-        <div class="section__header">
-          <div>
-            <p class="section__eyebrow">Todos os cursos</p>
-            <h2 class="section__title">Explore o ecossistema</h2>
-          </div>
-          <a href="#" class="btn btn--ghost btn--sm">Ver todos →</a>
+      <div class="section__header">
+        <div>
+          <p class="section__eyebrow">Todos os cursos</p>
+          <h2 class="section__title">Explore o ecossistema</h2>
         </div>
+        <a href="#" class="btn btn--ghost btn--sm">Ver todos →</a>
       </div>
 
-      <!-- MCP ZONE: recommended_courses — cards injetados pelo recipe -->
       <div id="courses-grid" class="courses-grid">
-        <!-- Cards estáticos — fallback para anônimos sem campanha ativa -->
         <article class="course-card course-card--featured" data-catalog="personalization">
           <a href="personalization.html">
             <div class="course-card__header" style="background: linear-gradient(135deg,#2d1f6e,#6b47c4);">
@@ -168,9 +182,7 @@
               </div>
               <h3 class="course-card__title">Marketing Cloud Personalization</h3>
               <p class="course-card__desc">Arquitetura, Sitemap, Catalog, Event API e Web Campaigns. Do zero ao produção.</p>
-              <div class="course-card__meta">
-                <span>6 módulos · 4h</span>
-              </div>
+              <div class="course-card__meta"><span>6 módulos · 4h</span></div>
             </div>
           </a>
         </article>
@@ -190,9 +202,7 @@
               </div>
               <h3 class="course-card__title">Data Cloud & CDP</h3>
               <p class="course-card__desc">Unificação de identidade, segmentação em tempo real e ativação de dados.</p>
-              <div class="course-card__meta">
-                <span>5 módulos · 3h</span>
-              </div>
+              <div class="course-card__meta"><span>5 módulos · 3h</span></div>
             </div>
           </a>
         </article>
@@ -211,9 +221,7 @@
               </div>
               <h3 class="course-card__title">Marketing Cloud Engagement</h3>
               <p class="course-card__desc">Email Studio, Journey Builder, AMPscript e automações para campanhas em escala.</p>
-              <div class="course-card__meta">
-                <span>8 módulos · 5h</span>
-              </div>
+              <div class="course-card__meta"><span>8 módulos · 5h</span></div>
             </div>
           </a>
         </article>
@@ -232,9 +240,7 @@
               </div>
               <h3 class="course-card__title">Sales Cloud Essentials</h3>
               <p class="course-card__desc">CRM, pipeline, automação de vendas e integração com o ecossistema Salesforce.</p>
-              <div class="course-card__meta">
-                <span>4 módulos · 2h30</span>
-              </div>
+              <div class="course-card__meta"><span>4 módulos · 2h30</span></div>
             </div>
           </a>
         </article>
@@ -242,13 +248,6 @@
 
     </div>
   </section>
-
-  <!-- ============================================================
-       MCP ZONE: continue_section
-       Visível APENAS para identificados com comportamento registrado
-       MCP injeta com base no lastCourseViewed
-  ============================================================ -->
-  <section class="section section--alt" id="continue-section"></section>
 
   <!-- ============================================================
        NUVENS — catálogo estático
