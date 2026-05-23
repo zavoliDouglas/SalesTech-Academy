@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Personalizar minha experiência — SalesTech Academy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --purple-deep:  #1a0f3d;
+      --purple-mid:   #2d1f6e;
+      --purple-main:  #5a3fa0;
+      --purple-light: #7c5cbf;
+      --purple-glow:  #a78bfa;
+      --purple-soft:  #f0ebff;
+      --green:        #1d9e75;
+      --green-glow:   #4ade80;
+      --white:        #ffffff;
+      --off-white:    #f8f7f5;
+      --text:         #1a1a18;
+      --text-muted:   #5f5e5a;
+      --border:       rgba(255,255,255,0.12);
+      --radius:       16px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--purple-deep);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 24px;
+      position: relative;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Background mesh */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 20% 10%, rgba(90,63,160,0.35) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 50% at 80% 80%, rgba(29,158,117,0.15) 0%, transparent 55%),
+        radial-gradient(ellipse 50% 40% at 60% 20%, rgba(167,139,250,0.12) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Grain overlay */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      opacity: 0.4;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .wrapper {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 480px;
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+      animation: fadeUp 0.6s ease both;
+    }
+
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 32px;
+      text-decoration: none;
+    }
+
+    .logo-mark {
+      width: 36px;
+      height: 36px;
+      background: var(--purple-main);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      color: #fff;
+      font-weight: 500;
+    }
+
+    .logo-text {
+      font-size: 15px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.9);
+      letter-spacing: -0.3px;
+    }
+
+    .logo-text em {
+      font-style: normal;
+      color: var(--purple-glow);
+    }
+
+    .live-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: rgba(29,158,117,0.15);
+      border: 1px solid rgba(29,158,117,0.3);
+      color: #6ee7b7;
+      font-size: 11px;
+      font-weight: 500;
+      font-family: 'DM Mono', monospace;
+      padding: 5px 12px;
+      border-radius: 20px;
+      letter-spacing: 0.5px;
+      margin-bottom: 20px;
+    }
+
+    .live-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--green-glow);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(1.4); }
+    }
+
+    .header h1 {
+      font-size: clamp(26px, 5vw, 34px);
+      font-weight: 300;
+      color: #fff;
+      letter-spacing: -0.8px;
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+
+    .header h1 strong {
+      font-weight: 500;
+      color: var(--purple-glow);
+    }
+
+    .header p {
+      font-size: 15px;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.6;
+    }
+
+    /* Card */
+    .card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      animation: fadeUp 0.6s ease 0.1s both;
+    }
+
+    /* Form */
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 12px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: rgba(255,255,255,0.5);
+      font-family: 'DM Mono', monospace;
+      margin-bottom: 8px;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 13px 16px;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 10px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      color: #fff;
+      outline: none;
+      transition: border-color 0.2s, background 0.2s;
+      -webkit-appearance: none;
+    }
+
+    .form-group select {
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='rgba(255,255,255,0.4)' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 40px;
+    }
+
+    .form-group select option {
+      background: #2d1f6e;
+      color: #fff;
+    }
+
+    .form-group input::placeholder {
+      color: rgba(255,255,255,0.25);
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      border-color: var(--purple-glow);
+      background: rgba(167,139,250,0.08);
+    }
+
+    .form-group input.error,
+    .form-group select.error {
+      border-color: #f87171;
+    }
+
+    .error-msg {
+      font-size: 12px;
+      color: #f87171;
+      margin-top: 5px;
+      display: none;
+    }
+
+    .error-msg.show { display: block; }
+
+    /* Profile options */
+    .profile-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .profile-option {
+      position: relative;
+    }
+
+    .profile-option input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .profile-option label {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding: 14px 16px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.15s;
+      text-transform: none;
+      letter-spacing: 0;
+      font-size: 13px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.7);
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .profile-option label span {
+      font-size: 11px;
+      font-weight: 400;
+      color: rgba(255,255,255,0.35);
+      font-family: 'DM Mono', monospace;
+    }
+
+    .profile-option input[type="radio"]:checked + label {
+      background: rgba(90,63,160,0.3);
+      border-color: var(--purple-glow);
+      color: #fff;
+    }
+
+    .profile-option input[type="radio"]:checked + label span {
+      color: var(--purple-glow);
+    }
+
+    .profile-option label:hover {
+      border-color: rgba(167,139,250,0.4);
+      background: rgba(255,255,255,0.08);
+    }
+
+    /* Divider */
+    .divider {
+      height: 1px;
+      background: rgba(255,255,255,0.08);
+      margin: 24px 0;
+    }
+
+    /* Submit */
+    .btn-submit {
+      width: 100%;
+      padding: 14px;
+      background: var(--purple-main);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn-submit:hover {
+      background: var(--purple-light);
+      transform: translateY(-1px);
+    }
+
+    .btn-submit:active { transform: translateY(0); }
+
+    .btn-submit svg {
+      width: 16px;
+      height: 16px;
+      transition: transform 0.2s;
+    }
+
+    .btn-submit:hover svg { transform: translateX(3px); }
+
+    /* Result */
+    .result {
+      display: none;
+      animation: fadeUp 0.4s ease both;
+    }
+
+    .result.show { display: block; }
+
+    .result-header {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .result-icon {
+      width: 56px;
+      height: 56px;
+      background: rgba(29,158,117,0.15);
+      border: 1px solid rgba(29,158,117,0.3);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+    }
+
+    .result-icon svg {
+      width: 24px;
+      height: 24px;
+      stroke: #6ee7b7;
+    }
+
+    .result-header h2 {
+      font-size: 20px;
+      font-weight: 400;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+
+    .result-header p {
+      font-size: 14px;
+      color: rgba(255,255,255,0.5);
+    }
+
+    .url-box {
+      background: rgba(0,0,0,0.3);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .url-box .url-text {
+      flex: 1;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--purple-glow);
+      word-break: break-all;
+      line-height: 1.5;
+    }
+
+    .btn-copy {
+      flex-shrink: 0;
+      background: rgba(90,63,160,0.3);
+      border: 1px solid rgba(167,139,250,0.3);
+      color: var(--purple-glow);
+      padding: 7px 14px;
+      border-radius: 7px;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      cursor: pointer;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+
+    .btn-copy:hover {
+      background: rgba(90,63,160,0.5);
+      border-color: var(--purple-glow);
+    }
+
+    .btn-copy.copied {
+      background: rgba(29,158,117,0.2);
+      border-color: rgba(29,158,117,0.4);
+      color: #6ee7b7;
+    }
+
+    .btn-access {
+      width: 100%;
+      padding: 14px;
+      background: var(--green);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: background 0.2s, transform 0.15s;
+      margin-bottom: 12px;
+    }
+
+    .btn-access:hover {
+      background: #25b585;
+      transform: translateY(-1px);
+    }
+
+    .btn-reset {
+      width: 100%;
+      padding: 10px;
+      background: transparent;
+      color: rgba(255,255,255,0.4);
+      border: none;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      cursor: pointer;
+      transition: color 0.15s;
+    }
+
+    .btn-reset:hover { color: rgba(255,255,255,0.7); }
+
+    /* Profile badge */
+    .profile-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(90,63,160,0.2);
+      border: 1px solid rgba(167,139,250,0.2);
+      color: var(--purple-glow);
+      font-size: 12px;
+      font-family: 'DM Mono', monospace;
+      padding: 4px 10px;
+      border-radius: 20px;
+      margin-top: 8px;
+    }
+
+    /* Animations */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Footer */
+    .footer-note {
+      text-align: center;
+      margin-top: 24px;
+      font-size: 12px;
+      color: rgba(255,255,255,0.25);
+      font-family: 'DM Mono', monospace;
+      animation: fadeUp 0.6s ease 0.2s both;
+    }
+
+    @media (max-width: 480px) {
+      .card { padding: 24px 20px; }
+      .profile-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="wrapper">
+
+  <!-- Header -->
+  <div class="header">
+    <a href="index.html" class="logo">
+      <span class="logo-mark">ST</span>
+      <span class="logo-text">SalesTech<em>Academy</em></span>
+    </a>
+    <div>
+      <div class="live-badge">
+        <span class="live-dot"></span>
+        EVENTO AO VIVO
+      </div>
+    </div>
+    <h1>Personalize sua<br/><strong>experiência</strong></h1>
+    <p>Informe seus dados e acesse a plataforma<br/>com conteúdo personalizado para você.</p>
+  </div>
+
+  <!-- Card -->
+  <div class="card">
+
+    <!-- FORM -->
+    <div id="form-view">
+      <div class="form-group">
+        <label for="email">Seu email</label>
+        <input
+          type="email"
+          id="email"
+          placeholder="voce@empresa.com"
+          autocomplete="email"
+          inputmode="email"
+        />
+        <p class="error-msg" id="email-error">Informe um email válido.</p>
+      </div>
+
+      <div class="form-group">
+        <label>Seu perfil</label>
+        <div class="profile-grid">
+          <div class="profile-option">
+            <input type="radio" name="profile" id="p-admin" value="admin" />
+            <label for="p-admin">
+              Admin
+              <span>Consultor / Admin</span>
+            </label>
+          </div>
+          <div class="profile-option">
+            <input type="radio" name="profile" id="p-dev" value="dev" />
+            <label for="p-dev">
+              Dev
+              <span>Desenvolvedor</span>
+            </label>
+          </div>
+          <div class="profile-option">
+            <input type="radio" name="profile" id="p-arq" value="arquiteto" />
+            <label for="p-arq">
+              Arquiteto
+              <span>Arquiteto de soluções</span>
+            </label>
+          </div>
+          <div class="profile-option">
+            <input type="radio" name="profile" id="p-neg" value="negocio" />
+            <label for="p-neg">
+              Negócio
+              <span>Marketing / Produto</span>
+            </label>
+          </div>
+        </div>
+        <p class="error-msg" id="profile-error">Selecione seu perfil.</p>
+      </div>
+
+      <div class="divider"></div>
+
+      <button class="btn-submit" onclick="handleSubmit()">
+        Gerar minha experiência
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="5" y1="12" x2="19" y2="12"/>
+          <polyline points="12 5 19 12 12 19"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- RESULT -->
+    <div id="result-view" class="result">
+      <div class="result-header">
+        <div class="result-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+        </div>
+        <h2>Pronto, <span id="result-name"></span>!</h2>
+        <p>Sua experiência personalizada está pronta.</p>
+        <div class="profile-badge" id="result-profile-badge"></div>
+      </div>
+
+      <div class="url-box">
+        <span class="url-text" id="result-url"></span>
+        <button class="btn-copy" id="copy-btn" onclick="copyUrl()">Copiar</button>
+      </div>
+
+      <a class="btn-access" id="access-btn" href="#" target="_blank">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        Acessar minha plataforma
+      </a>
+
+      <button class="btn-reset" onclick="resetForm()">← Voltar e alterar dados</button>
+    </div>
+
+  </div>
+
+  <p class="footer-note">Powered by Salesforce Marketing Cloud Personalization</p>
+
+</div>
+
+<script>
+  let generatedUrl = "";
+
+  const profileLabels = {
+    admin:     "Admin / Consultor",
+    dev:       "Desenvolvedor",
+    arquiteto: "Arquiteto de Soluções",
+    negocio:   "Negócio / Marketing"
+  };
+
+  function handleSubmit() {
+    const email   = document.getElementById("email").value.trim();
+    const profile = document.querySelector('input[name="profile"]:checked')?.value || "";
+
+    // Validação
+    let valid = true;
+
+    const emailInput = document.getElementById("email");
+    const emailError = document.getElementById("email-error");
+    const profileError = document.getElementById("profile-error");
+
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      emailInput.classList.add("error");
+      emailError.classList.add("show");
+      valid = false;
+    } else {
+      emailInput.classList.remove("error");
+      emailError.classList.remove("show");
+    }
+
+    if (!profile) {
+      profileError.classList.add("show");
+      valid = false;
+    } else {
+      profileError.classList.remove("show");
+    }
+
+    if (!valid) return;
+
+    // Gera o payload codificado em Base64
+    const payload = btoa(encodeURIComponent(`${email}|${profile}`));
+    const baseUrl = "https://zavolidouglas.github.io/SalesTech-Academy/";
+    generatedUrl  = `${baseUrl}?sta=${payload}`;
+
+    // Preenche o resultado
+    const firstName = email.split("@")[0];
+    document.getElementById("result-name").textContent = firstName;
+    document.getElementById("result-url").textContent  = generatedUrl;
+    document.getElementById("access-btn").href         = generatedUrl;
+    document.getElementById("result-profile-badge").textContent = profileLabels[profile] || profile;
+
+    // Troca de view com animação
+    document.getElementById("form-view").style.display  = "none";
+    const resultView = document.getElementById("result-view");
+    resultView.classList.add("show");
+  }
+
+  function copyUrl() {
+    if (!generatedUrl) return;
+
+    navigator.clipboard.writeText(generatedUrl).then(() => {
+      const btn = document.getElementById("copy-btn");
+      btn.textContent = "Copiado ✓";
+      btn.classList.add("copied");
+      setTimeout(() => {
+        btn.textContent = "Copiar";
+        btn.classList.remove("copied");
+      }, 2500);
+    });
+  }
+
+  function resetForm() {
+    document.getElementById("form-view").style.display = "block";
+    document.getElementById("result-view").classList.remove("show");
+    document.getElementById("email").value = "";
+    document.querySelectorAll('input[name="profile"]').forEach(r => r.checked = false);
+    generatedUrl = "";
+  }
+
+  // Enter no campo email avança
+  document.getElementById("email").addEventListener("keydown", function (e) {
+    if (e.key === "Enter") handleSubmit();
+  });
+</script>
+
+</body>
+</html>
