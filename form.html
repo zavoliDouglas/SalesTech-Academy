@@ -542,6 +542,17 @@
       </div>
 
       <div class="form-group">
+        <label for="firstname">Como deseja ser chamado?</label>
+        <input
+          type="text"
+          id="firstname"
+          placeholder="Ex: Douglas"
+          autocomplete="given-name"
+        />
+        <p class="error-msg" id="firstname-error">Informe como deseja ser chamado.</p>
+      </div>
+
+      <div class="form-group">
         <label>Seu perfil</label>
         <div class="profile-grid">
           <div class="profile-option">
@@ -595,7 +606,7 @@
             <polyline points="20 6 9 17 4 12"/>
           </svg>
         </div>
-        <h2>Pronto, <span id="result-name"></span>!</h2>
+        <h2>Olá, <span id="result-name"></span>! 👋</h2>
         <p>Sua experiência personalizada está pronta.</p>
         <div class="profile-badge" id="result-profile-badge"></div>
       </div>
@@ -630,15 +641,18 @@
   };
 
   function handleSubmit() {
-    const email   = document.getElementById("email").value.trim();
-    const profile = document.querySelector('input[name="profile"]:checked')?.value || "";
+    const email     = document.getElementById("email").value.trim();
+    const firstname = document.getElementById("firstname").value.trim();
+    const profile   = document.querySelector('input[name="profile"]:checked')?.value || "";
 
     // Validação
     let valid = true;
 
-    const emailInput = document.getElementById("email");
-    const emailError = document.getElementById("email-error");
-    const profileError = document.getElementById("profile-error");
+    const emailInput     = document.getElementById("email");
+    const firstnameInput = document.getElementById("firstname");
+    const emailError     = document.getElementById("email-error");
+    const firstnameError = document.getElementById("firstname-error");
+    const profileError   = document.getElementById("profile-error");
 
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       emailInput.classList.add("error");
@@ -647,6 +661,15 @@
     } else {
       emailInput.classList.remove("error");
       emailError.classList.remove("show");
+    }
+
+    if (!firstname) {
+      firstnameInput.classList.add("error");
+      firstnameError.classList.add("show");
+      valid = false;
+    } else {
+      firstnameInput.classList.remove("error");
+      firstnameError.classList.remove("show");
     }
 
     if (!profile) {
@@ -658,14 +681,13 @@
 
     if (!valid) return;
 
-    // Gera o payload codificado em Base64
-    const payload = btoa(encodeURIComponent(`${email}|${profile}`));
+    // Gera o payload codificado em Base64 — formato: email|profile|firstname
+    const payload = btoa(encodeURIComponent(`${email}|${profile}|${firstname}`));
     const baseUrl = "https://zavolidouglas.github.io/SalesTech-Academy/";
     generatedUrl  = `${baseUrl}?sta=${payload}`;
 
-    // Preenche o resultado
-    const firstName = email.split("@")[0];
-    document.getElementById("result-name").textContent = firstName;
+    // Preenche o resultado com o nome informado
+    document.getElementById("result-name").textContent = firstname;
     document.getElementById("result-url").textContent  = generatedUrl;
     document.getElementById("access-btn").href         = generatedUrl;
     document.getElementById("result-profile-badge").textContent = profileLabels[profile] || profile;
@@ -694,6 +716,7 @@
     document.getElementById("form-view").style.display = "block";
     document.getElementById("result-view").classList.remove("show");
     document.getElementById("email").value = "";
+    document.getElementById("firstname").value = "";
     document.querySelectorAll('input[name="profile"]').forEach(r => r.checked = false);
     generatedUrl = "";
   }
