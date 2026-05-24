@@ -138,9 +138,11 @@
   <!-- MCP ZONE: recommended_courses
        Seção oculta por padrão — MCP exibe quando recipe retorna itens
   -->
-  <section class="section" id="recommended-section" style="display:none;">
+  <!-- Seção sempre visível como divisor visual
+       MCP injeta os cards em #recommended-courses quando recipe retorna itens -->
+  <section class="section" id="recommended-section">
     <div class="container">
-      <div class="section__header">
+      <div class="section__header" id="recommended-header" style="display:none;">
         <div>
           <p class="section__eyebrow">Recomendado para você</p>
           <h2 class="section__title">Sua trilha personalizada</h2>
