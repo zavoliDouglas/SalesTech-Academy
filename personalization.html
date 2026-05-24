@@ -263,24 +263,25 @@
         </p>
 
         <div class="code-block">
-          <pre><span class="comment">// Exemplo de Template JS — Personalização de banner</span>
-<span class="key">template</span>.<span class="key">bind</span>(<span class="key">context</span> => {
-  <span class="key">const</span> user = <span class="key">context</span>.user;
-  <span class="key">const</span> firstName = user.<span class="key">attributes</span>.<span class="string">'First Name'</span> || <span class="string">'Visitante'</span>;
-  <span class="key">const</span> profile = user.<span class="key">attributes</span>.<span class="string">'profile'</span> || <span class="string">'generic'</span>;
+          <pre><span class="comment">// Serverside Code — Personalização por perfil</span>
+<span class="key">export class</span> HeroBanner <span class="key">implements</span> CampaignTemplateComponent {
 
-  <span class="comment">// Conteúdo muda conforme o perfil</span>
-  <span class="key">const</span> content = {
-    <span class="string">arquiteto</span>: <span class="string">'Explore arquitetura de soluções MCP'</span>,
-    <span class="string">dev</span>: <span class="string">'Acesse a Event API e exemplos de código'</span>,
-    <span class="string">admin</span>: <span class="string">'Configure sua primeira Web Campaign'</span>
-  };
+  run(context: CampaignComponentContext) {
+    <span class="key">const</span> firstName = context.user.attributes[<span class="string">"firstName"</span>]?.value || <span class="string">"Visitante"</span>;
+    <span class="key">const</span> profile   = context.user.attributes[<span class="string">"profileType"</span>]?.value || <span class="string">"admin"</span>;
 
-  <span class="key">return</span> {
-    <span class="string">headline</span>: <span class="string">`Olá, ${firstName}!`</span>,
-    <span class="string">message</span>: content[profile] || content.<span class="string">admin</span>
-  };
-});</pre>
+    <span class="key">const</span> messages = {
+      <span class="string">arquiteto</span>: <span class="string">"Explore arquitetura de soluções MCP"</span>,
+      <span class="string">dev</span>:       <span class="string">"Acesse o Sitemap e os 4 pilares"</span>,
+      <span class="string">admin</span>:     <span class="string">"Configure sua primeira Web Campaign"</span>
+    };
+
+    <span class="key">return</span> {
+      <span class="string">headline</span>: <span class="string">`Olá, ${firstName}!`</span>,
+      <span class="string">message</span>:  messages[profile] || messages.admin
+    };
+  }
+}</pre>
         </div>
 
         <div class="tip-box">
@@ -363,7 +364,7 @@
             <div class="arch-arrow">⇄</div>
             <div class="arch-node" style="border-color:var(--coral-400);background:var(--coral-50);">
               <div class="arch-node__title" style="color:var(--coral-400);">Sales/Service</div>
-              <div class="arch-node__sub">CRM Events</div>
+              <div class="arch-node__sub">Conector nativo</div>
             </div>
           </div>
         </div>
@@ -379,11 +380,11 @@
           </div>
           <div class="concept-card">
             <div class="concept-card__title">MCP + Sales Cloud</div>
-            <div class="concept-card__desc">Dados de CRM (oportunidades, stage) enriquecem o perfil via Event API. MCP personaliza portal do cliente com base no contexto comercial.</div>
+            <div class="concept-card__desc">O conector nativo entre MCP e Sales Cloud permite enriquecer o perfil com dados de CRM e personalizar o portal do cliente com base no contexto comercial.</div>
           </div>
           <div class="concept-card">
             <div class="concept-card__title">MCP + Service Cloud</div>
-            <div class="concept-card__desc">Histórico de casos e interações de atendimento alimentam o perfil. MCP personaliza conteúdo de suporte baseado em problemas anteriores.</div>
+            <div class="concept-card__desc">O conector nativo integra o histórico de atendimento ao perfil do MCP, permitindo personalizar o conteúdo de suporte com base nas interações anteriores do cliente.</div>
           </div>
         </div>
       </div>
