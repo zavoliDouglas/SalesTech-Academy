@@ -22,8 +22,6 @@
        Ativado manualmente durante a demo
   ============================================================ -->
   <div id="event-banner"></div>
-  <!-- MCP ZONE: global_popup — âncora de tracking para exit intent -->
-<div id="global-popup" style="display:none;"></div>
 
   <!-- ============================================================
        NAVBAR
@@ -137,18 +135,18 @@
        Recipe de recomendação por perfil + comportamento
        Visível para identificados — MCP injeta os cards
   ============================================================ -->
-  <section class="section" id="recommended-section">
+  <!-- MCP ZONE: recommended_courses
+       Seção oculta por padrão — MCP exibe quando recipe retorna itens
+  -->
+  <section class="section" id="recommended-section" style="display:none;">
     <div class="container">
-      <div id="courses-header-rec">
-        <div class="section__header">
-          <div>
-            <p class="section__eyebrow" id="rec-eyebrow">Recomendado para você</p>
-            <h2 class="section__title" id="rec-title">Sua trilha personalizada</h2>
-          </div>
-          <a href="#cursos" class="btn btn--ghost btn--sm">Ver todos →</a>
+      <div class="section__header">
+        <div>
+          <p class="section__eyebrow">Recomendado para você</p>
+          <h2 class="section__title">Sua trilha personalizada</h2>
         </div>
+        <a href="#cursos" class="btn btn--ghost btn--sm">Ver todos →</a>
       </div>
-      <!-- MCP ZONE: recommended_courses — cards injetados pelo recipe -->
       <div id="recommended-courses" class="courses-grid"></div>
     </div>
   </section>
